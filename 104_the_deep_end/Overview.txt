@@ -1,0 +1,27 @@
+#Environment variables, these are needed for linux to know what to do, how to do it, who is doing it and where it's doing it
+
+echo ${PWD}			# Path to/of Working Directory
+echo ${USER}		# Username
+echo ${HOSTNAME}	# Name of the machine we are currently on
+echo ${HOME}		# The HOME directory, the place you go to when loggin in			# You can also use ~ as a substation for ${HOME}
+echo ${PATH}		# List of all the directories to look in to find commands/tools
+echo ${SHELL}		# The language interpreter that interprets all your input 			   commands
+
+#Downloading files, easy peasy
+wget https://github.com/rhuebler/HOPS/releases/download/0.35/hops0.35.tar.gz
+
+
+# To save harddisk space from these large genomes and bulky software packages, stuff is normally compressed (i.e converted from a human readable alphanumerical structure
+# to something closer to computer language, binary). This saves a lot of harddrive space, and can sometimes even speed up analysis. 
+gzip file1.txt			# Compress a file in the gzip format
+gunzip file1.txt.gz		# Decompress a gzip format file
+tar file1.txt			# Compress a file in the tarball format
+tar -xvf file1.tar		# Decompress a file in the tarball format (-x is extract, -v is verbose (generate text that tells us what is going on), -f is file archive)
+tar -xzvf file1.tar.gz	# Decompress a file in the gzipped tarball format (we add -z for gz or gzipped
+
+# Checking file size, number of lines or number of files
+ls -lh 				# This gives human readable info on the files in a directory
+wc -l				# This will count the number of lines of whatever you put into it
+wc -l text1.txt		# Will count the number of lines in text1.txt
+ls folder/ | wc -l	# We now get a list of all the items in folder/ and PIPE (send) that to wc -language
+					# wc will then count the number of lines in the list, and now you know how many files are in folder

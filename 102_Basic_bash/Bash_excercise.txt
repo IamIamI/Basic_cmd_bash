@@ -1,0 +1,71 @@
+Slide 5
+1.A we can now transfer data to a file. Try running Bash_script1.sh and direct it's output to a new file in your personal folder
+your_username/bash_excercise1A.txt
+
+1.B. There are always multiple roads that lead to rome, there is the E80, the E45, the E35 and E80 and several others.
+Make a copy of Bash_script1.sh into your personal folder(your_username), now use nano to open your personal copy and change
+the script to direct the output from within the script to your_username/bash_excercise1A.txt
+
+1.C. Just to understand how text direction goes in bash, now try to combine A and B, run your newly made script, but also 
+give it an additional text forwarding at the script level. 
+
+
+2. Make a new empty file in your_username folder. Now open this file for editing.
+Now that this file is open. make a variable called 'print_this_to_screen' and write whatever you want.
+Add a second line makes echo output the string within the variable hint! use the {} not the () variant
+Next, close the file, save the update you made, and run the file using 
+bash your_username/your_filename.sh
+
+3A. Check bash script 2 and 3
+3B. Copy both scripts and change the value of 'variable' within the script, see what happens
+	you can even try to change the type, see what happens
+
+4. Run Bash script 4, afterwards see if you understand how it works.
+	Copy the script and see if you can make me a script that gives me the HAHA number 420 using the 5 for_loop_file's 
+
+5. Run Bash script 5, now make a copy of this and make me a personalized meme :D 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sollutions 
+
+1.A bash Bash_script1.sh > your_username/bash_excercise1A.txt
+1.B Make a copy using 
+cp Bash_script1.sh your_username/Bash_script1_copy.sh
+
+Open the script using Nano (text editor)
+nano your_username/Bash_script1_copy.sh
+
+inside the script you can write
+ls trees*.txt > your_username/bash_excercise1B.txt
+
+Press Cntrl + x, to stop working, it will ask you to save yes or no, press Y, enter, done
+
+Now run the script either using 
+bash your_username/Bash_script1_copy.sh
+or 
+bash your_username/Bash_script1_copy.sh > your_username/bash_excercise1B2.txt
+You will see, no difference in output, that is because we already told within the script
+to output the STDout to a different location, therefore bash will not see any STDout to redirect
+to the screen or to a file... 
+

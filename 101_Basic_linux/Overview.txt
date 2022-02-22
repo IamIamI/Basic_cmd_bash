@@ -1,0 +1,43 @@
+mkdir # make a directory 
+
+ls # list files/folders
+ls -lh # Show all the metadata of files such as size and read/write/execute permissions
+ln # make a link to file/folder
+pwd # Path to Working Directory
+basename # Gives the absolute file name. without directory
+dirname # Gives the absolute directory name for file, without filename
+
+cp # copy files, directories need to be done recursive
+mv # move files or change it's name, directories need to be done recursively
+rm # remove a file, directories need to be done recursively
+
+
+find # find a file in a location or multiple locations
+touch # this creates an empty file, will have it's uses later
+nano # a file editor, can be used to quickly edit files
+less # a on-the-fly way of showing the content of a file
+echo # Can be used to put text to STDout
+
+cat # concatenate files, can also be used to put file content onto STDout
+zcat # the zipped equivalent of cat
+head # take the top lines from a file
+tail # take the bottom lines from a file
+cut # you can split lines in sections, good for column extractions
+split # break up a file into sub files
+|   # a pipe, this will put the STDout from the first command into the STDin 
+	for the next command
+grep # search for a work/character/regex in a file
+		grep 'string_search' file.txt
+sed # replace one or all word/character/regex in a file
+		sed 's/string_search/string_replace/g' file.txt
+
+> # directing output to a location
+>> # adding an output to a location
+1>	# STDout
+2>	# STDerr
+&>	# STDout + STDerr (all output)
+
+-h / --help # almost all tools come with a help list that shows the avaialable commands and how to use them
+				mkdir --help
+				ls --help
+				sed --help

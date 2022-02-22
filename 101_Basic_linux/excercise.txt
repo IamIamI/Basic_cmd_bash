@@ -1,0 +1,80 @@
+Slide 5
+1. make a personal folder in this directory with your name
+
+2. look at what files are in test_folder1
+
+3. give me the name and directory of test_file1
+
+
+Slide 6
+4. make an empty file in your personal folder, then copy it and give a new name, then delete the original file
+
+5.A make a subfoler structure like this using mkdir, notice the recurssive error you get
+your_username/level1/level2/level3/
+
+5.B make a subfoler structure like this using mkdir -p
+your_username/level1/level2/level3/
+
+
+Slide 7
+6. Make a link to the last level3 using ln, and put it in the main folder /mnt/scratch/basic_linux
+
+7. Concat all the files in test_folder2 using cat. 
+
+8. Try cut on file_1 to get columns 3, 6, 12 and 17
+
+
+Slide 8
+9. Read test_file3.txt, now use heads and tails to only get the first and last line
+
+10. See the read, write and execute permissions for the files in test_folder1
+
+11. Exam: Get the first line of file4.txt, split that line using cut and extract only column 4,12,18 and 23, 
+use sed to replace an error character (@) with a (Y) and save this to 
+your_username/your_username_excercise11.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+Howto, don't cheat!
+1. mkdir your_username
+
+2. ls test_folder1/
+
+3. basename file1.txt
+
+3. dirname file1.txt
+
+4.A touch your_username/old_file
+
+4.B cp your_username/old_file your_username/new_file
+
+4.C rm your_username/old_file
+
+5.A mkdir your_username/level1/level2/level3/
+
+5.B mkdir -p your_username/level1/level2/level3/
+
+6. ln -s your_username/level1/level2/level3/ your_username_level3_link
+
+7.A cat test_folder2/a.txt test_folder2/b.txt test_folder2/c.txt test_folder2/d.txt test_folder2/e.txt test_folder2/f.txt > your_username/your_username_excercise7.txt
+7.B your_username/your_username_excercise7.txt
+
+8. cut -f3,6,12,17 file1.txt
+
+9.A. head -l 1 test_file3.txt > your_username/your_username_excercise9.txt
+9.B. tail -l 1 test_file3.txt >> your_username/your_username_excercise9.txt
+9.C. less your_username/your_username_excercise9.txt
+
+10. ls -lh test_folder1/
+
+11. head -n 1 file4.txt | cut -f 4,12,18,23 | sed 's/\@/Y/g' > 

@@ -1,0 +1,205 @@
+1. Download the following file using wget
+https://github.com/rhuebler/HOPS/releases/download/0.35/hops0.35.tar.gz
+Then transfer it using WinSCP or equivalent software and review the document on your machine
+
+2. There are 10 downloaded gzipped fq files in /mnt/archgen/users/lesley_sitter/Files_for_104_class/
+I would like you to copy files xaa-xaf, unzip them, concatanate them into one file, in your personal folder
+And call this new file Subsetted_genome_dataset.fq then gzip it
+your_username/Subsetted_genome_dataset.fq 
+
+3. Make a bash script that gets the same files (xaa-xaf) from the following folders. 
+Merge them into one file in your your_username folder
+I'm making it hard, so there ARE mistakes... the excercise is to deal with it ;)
+/home/lesley_sitter/archgen/Files_for_104_class/
+/mnt/scratch/basic_linux/104_the_deep_end/Files_for_104_class/
+/mnt/scratch/lesley_sitter/Files_for_104_class/
+
+4. Congratulations! You made a merged FastQ file.... or wait... did you? Have you even checked the file to make sure the result is correct? 
+
+5. Fasta files contain sets of 2 parts, the first part is called a head and starts with a '>' character. This header stores info about the 
+sequence, if it's a read or if it's a chromosome, or something else. Sometimes the organism or the size, or if it's a read it can hold the 
+machine or date when it was sequenced. The second part is the sequence itself, normally only represented in ACTG, but in the odd occasion, there
+is the chance people use "ambigous" characters if the machine or user is unsure, or in case of genomes, if the locus is hetrozygotic and has two 
+different nucleotides on that position
+
+FastQ has 4 lines, the first again is a header however in fastq it starts with a @. FastQ Headers often contain references to the sequencer and date
+of sequencing, and are often not human readable...
+The second portion is again the sequence, the same as normal. The third part is a duplicate of the header and is just wasted space in my opinnion as no
+one uses it at all... the fourth line is the quality of a basecall as given by the sequencer. These are represented in ASCII characters (essentially all
+characters you can type are ASCII characters), and they are characters that represent an alphanumerical value called a PHRED score. The higher the score, 
+the higher the PROBABILITY is that a base was called correctly based on the machine's calibrations. 
+
+Please download the Fasta assecion NC_002523 from RefSeq, and maybe write down what the organism is :D Now that it's downloaded to the hard drive of your computer, youc can use
+the WinSCP (or equivalent) to send it to the the server, maybe zip it to save space.
+just gzip is good enough :D.
+
+If we end up wanting to run eager and "map" our sequencing data to a reference genome, you now have succesfully prepared that reference by downloading it from refseq
+
+Now that you done this, you can delete this file, we won't use it for anything else ;) this was my main project for my PhD :P and is small enough to not cause long waiting times.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Answers, don't cheat unless you have to ;)
+
+1. wget https://github.com/rhuebler/HOPS/releases/download/0.35/hops0.35.tar.gz
+Open WinSCP, login on daghead2.eva.mpg.de
+Browse to the folder where you downloaded it and drag/drop it from the server into your download folder
+
+
+2. two ways you can do this
+
+Let's try the most laboursome way first, manual typing a lot of text
+
+cp path_to/xaa.fq.gz path_to_your_username/
+cp path_to/xab.fq.gz path_to_your_username/
+cp path_to/xac.fq.gz path_to_your_username/
+cp path_to/xad.fq.gz path_to_your_username/
+cp path_to/xae.fq.gz path_to_your_username/
+cp path_to/xaf.fq.gz path_to_your_username/
+gunzip path_to_your_username/xaa.fq.gz
+gunzip path_to_your_username/xab.fq.gz
+gunzip path_to_your_username/xac.fq.gz
+gunzip path_to_your_username/xad.fq.gz
+gunzip path_to_your_username/xae.fq.gz
+gunzip path_to_your_username/xaf.fq.gz
+cat path_to_your_username/xaa.fq path_to_your_username/xaa.fq path_to_your_username/xaa.fq path_to_your_username/xaa.fq path_to_your_username/xaa.fq path_to_your_username/xaa.fq > path_to_your_username/Subsetted_genome_dataset.fq
+gzip path_to_your_username/Subsetted_genome_dataset.fq
+
+
+That looked messy right? lot of text, long lines... so let's reduce it with a for loop
+
+cp path_to/xaa.fq.gz path_to_your_username/
+cp path_to/xab.fq.gz path_to_your_username/
+cp path_to/xac.fq.gz path_to_your_username/
+cp path_to/xad.fq.gz path_to_your_username/
+cp path_to/xae.fq.gz path_to_your_username/
+cp path_to/xaf.fq.gz path_to_your_username/
+for files in path_to_your_username/* ; do
+	gunzip ${files}
+done
+for files in path_to_your_username/* ; do
+	cat ${files} >> Subsetted_genome_dataset.fq
+done
+gzip Subsetted_genome_dataset.fq
+
+
+We also learned that you can combine the cat and unzip part in one step, further reducing the script
+cp path_to/xaa.fq.gz path_to_your_username/
+cp path_to/xab.fq.gz path_to_your_username/
+cp path_to/xac.fq.gz path_to_your_username/
+cp path_to/xad.fq.gz path_to_your_username/
+cp path_to/xae.fq.gz path_to_your_username/
+cp path_to/xaf.fq.gz path_to_your_username/
+for files in path_to_your_username/* ; do
+	zcat ${files} >> Subsetted_genome_dataset.fq
+done
+gzip Subsetted_genome_dataset.fq
+
+
+We can further reduce this with a regex statement... regex is a means to "search" for multiple scenarions isntead of literal character matching
+One example is the * that i have used numerous times... this is a wildcard. but there are other regex codes as mentiond in the slides
+cp path_to/xa[a-f].fq.gz path_to_your_username
+for files in path_to_your_username/* ; do
+	zcat ${files} >> Subsetted_genome_dataset.fq
+done
+gzip Subsetted_genome_dataset.fq
+
+
+We also know that we don't always need to copy the files, we can just output their content to the screen directly... or even better
+we can direct that output to another file using the crocodile marks > and >>
+for files in path_to/* ; do
+	zcat ${files} >> Subsetted_genome_dataset.fq
+done
+gzip Subsetted_genome_dataset.fq
+
+
+We also learned we can pipe stuff from one process to another, so why not do that now?
+for files in path_to/* ; do
+	zcat ${files} | gzip -9 - >> Subsetted_genome_dataset.fq.gz
+done
+
+Now the next level is max level :P we'll use pipe's, regex, and shortcuts
+zcat path_to/xa[a-f].fq.gz | gzip -9 - > path_to_your_username/Subsetted_genome_dataset.fq.gz
+
+Or since we know there are only .fq.gz files in there we can go fully ape and regex everything
+zcat path_to/xa[a-f]* | gzip -9 - > path_to_your_username/Subsetted.genome_dataset.fq.gz
+
+
+
+3. The first files are still the same, but for the files in the 2nd folder we get errors from gzip
+I sneakily improperly zipped xad.fq.gz and xag.fq.gz, so we should get an error when trying to unzip these. 
+One easy way of validating this is just looking at the file in nano... zipped files are binary and you cannot read that, so if you get a message saying
+"the file seems to be binary, do you still want to read it", is a good way to test if it's actually gzipped or not
+
+The second issue we find is that there is no such folder /mnt/scratch/lesley_sitter/Files_for_104_class/ 
+It's nice to write scripts, but it gets pretty confusing pretty fast, so a spelling mistake here or there are bound to crawl in.
+In this case you get the error that directory doesn't exist... so just go to the directory, check it and change it appropriately
+BUT problem is still not solved, if you actually run the script again, it will again give another error... it seems that the other 
+researcher didn't use the same naming system as you, instead they went with the yaa.tar.gz format... so now your easy script from 2 doesn't work anymore
+Maybe you can find a way to solve this? We could use regex again maybe 
+[x-y][a-f]*.tar.gz
+Or we could create a special loop for the files in that particular folder, maybe they have other issues too
+
+
+4. We are expecting 5000 lines per folder, 3 folders... so we can check if we have 15000 lines of text using the 'wc -l' command
+zcat xaa.fq.gz | wc -l
+But we can also check the start and end using head and tail
+zcat your_username/Subsetted_genome_dataset.fq  | head -n 20
+zcat your_username/Subsetted_genome_dataset.fq  | tail -n 20
+
+
+5. Google is always your friend. But if you couldn't find RefSeq (a database for Reference Sequences) hosted by NCBI, then this is the link.
+https://www.ncbi.nlm.nih.gov/refseq/
+Just fill in the accession number of your organism, or if you don't know the number of the specific genome, you can always browse the taxonomic tree 
+https://www.ncbi.nlm.nih.gov/taxonomy
+Or look for ALL genomes of your organism in either refseq or the assembly portal.
+https://www.ncbi.nlm.nih.gov/assembly
+
+There also is european equivalent of NCBI called EMBL/EBI, which can be found here.
+https://www.ebi.ac.uk/
+But as always, the european equivalent is less organised and more chaotic to deal with...
+
+The organism is S. entomophila, the sequence is pADAP lower case p in front of a name often represents a plasmid name

@@ -1,0 +1,94 @@
+1. Some user ran a job, i'm curious how much time it took and how much memory it used. The job number is 1499874
+Can you find the informaiotn on this job? Like username, memory, and "walltime"
+
+2. just ask qsub to make you a empty file with touch. If the sever is a bit slow or if you are fast enough
+you can then use qstat to see your job. Or if the server is fast (which would be a miracle tbh :P) then you can use qacct to see
+it afterwards
+
+3. As you noticed apart from our "touch"ed file, we also get two really ugly named files... these are the STDout and STDerr 
+from qsub. These normally are put into the folder from which you do the submission. 
+you can combine these into one file using the option (-j Y), you can also specify a different name for them by using the option -o for the STDout and
+-e for STDerr
+qsub -b y -cwd -j Y touch your_username/test_file.txt
+qsub -b y -cwd -o your_username/qsub_stdout.txt -e your_username/qsub_stderr.txt touch your_username/test_file.txt
+qsub -b y -cwd -j Y -o your_username/qsub_combinedSTD.txt touch your_username/test_file.txt
+
+4. I left an empty qsub script... It already defined everything we need except for the -o line.
+Just try to do some things in it, make some empty files, transform some files, shuffle some files around..
+Please use only files from our previous session or make new files... don't go mess around in other people's folder :P
+Once you are done just send it away to qsub, and wait for it to finish and show you the result :D
+qsub empty_qsub_script.sh
+
+5. You can alos check out Malt_053_run.sh, this is a qsub script that shows how to run something on MALT, our main software for taxonomic identification.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Run the following
+qacct -j 1499874
+You should see that the output says that the user was Taylor Hermes,
+You can see from some of these sections that it was a small job that lasted less than 30 seconds
+
+start_time   Tue Dec  7 13:04:11 2021
+end_time     Tue Dec  7 13:04:38 2021
+
+
+However the cpu says it took 67seconds... this is because cpu is calculated based on the time cpu's have done something
+If you run something on 2 CPU's then the actual time (wall time) is doubled by 2... 
+
+cpu          67.353s
+
+
+We can also see he used ~ 0.3Gb of memory, with an average of 11Gb/s average 
+
+maxvmem      302.574MB
+mem          11.834GBs
+
+
+And we can also see that he created some files roughly half a GB in size
+
+io           0.418GB
+
+
+2. 
+qsub -b y -cwd touch your_username/test_file.txt
+qstat -u your_username 
+or if you know the number
+qstat -j your_jobnumber

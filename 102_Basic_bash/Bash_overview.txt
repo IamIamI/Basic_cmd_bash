@@ -1,0 +1,111 @@
+-h / --help # almost all tools come with a help list that shows the avaialable commands and how to use them
+				mkdir --help
+				ls --help
+				sed --help
+
+
+> # directing output to a location
+>> # adding an output to a location
+1>	# STDout
+2>	# STDerr
+&>	# STDout + STDerr (all output)
+
+
+Variables in bash.
+variable_bool=true											#this type of variable is called a boolean, and can only be either true or false
+variable_bool=false											#It comes from binary statements that have only a 0 or 1 sollution, 1+1 = 0 (well, 1 0)
+variable_numeric=1											#integers (hole numbers), floats (numbers with decimal points) and in other languages a double (64bit, wheras floats are 32 bit)
+variable_string="i'm a string"								#A string is not part of an instrument, it's a string of characters
+variable_array=(i am a collection of individual elements)	#A array (sometimes called vector in other languages) is a collection of things, can be other variables, integers, strings, whatever)
+
+Arrays have indices... 
+echo ${variable_array[1]} will return "am"
+Keep in mind, bash will always want to interpret whatever it gets on STDin, to be a object or command.... 
+This is why 
+${variable_array[1]} 
+will just return an error "am: command not found"
+Bash is dumb dumb, so you have to be smart when tyring to make it do something
+
+
+Calling on variables
+${variable}								#This bracket tells bash that a variable is coming, and it's content should be used.
+$(variable)								#This stands for command substitution; it means run command and put its output here.
+$variable								#This will assume variable is a command to run
+
+examples
+variable_A="I am a string"
+echo ${variable_A}
+I am a string
+
+variable_B=$(echo ${variable_A})
+echo ${variable_B}
+I am a string
+
+function x { 
+	echo ${variable_A} 
+}
+variable_C="x"
+$variable_C
+
+
+If else statements
+variable=1
+if ${variable}=1; do
+	echo "Variable is indeed a 1"
+done
+
+if ${variable}=1; do
+	echo "Variable is indeed a 1"
+else
+	echo "Variable is not 1"
+done
+
+if ${variable}=1; do
+	echo "Variable is indeed a 1"
+elif ${variable}=2; do
+	echo "Variable is a 2"
+else
+	echo "Variable is neither 1 or 2"
+done
+
+if [[ $variable -gt 1 ]]; do
+	echo "Variable is greater than 1"
+elif [[ $variable -eq 1 ]]; do
+	echo "Variable is equal to 1"
+elif [[ $variable -lt 1 ]]; do
+	echo "Variable is lower than 1"
+fi
+
+Boolean if statments
+variable=true
+if $variable ; then 
+	echo "The variable is True"
+else
+	echo "The variable is False"
+fi
+
+
+For loop
+count_ah_ah_ah=(for_loop_file1.txt for_loop_file2.txt for_loop_file3.txt for_loop_file4.txt)
+clear
+for items in ${count_a_a_a); do
+	cat ${items}
+	sleep 2
+	clear
+done
+
+
+While loops
+i = 1
+while read line; do
+	if [[ i -gt 2 ]]; then
+		echo $line
+		sleep 2
+	else
+		echo $line
+		sleep 2
+		clear
+	fi
+	i=$((i + 1))
+done < while_loop_example.txt
+

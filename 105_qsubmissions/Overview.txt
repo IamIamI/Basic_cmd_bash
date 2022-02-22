@@ -1,0 +1,54 @@
+# The Sun Grid Engine on which the leipzig is running is specific to leipzig, and although there is some information online
+# That information pool is pretty dried up. So most of the LEipzig/Jena experiences have therefore been documented on what they call KBase
+# https://kbase.eva.mpg.de/xwiki/bin/view/Departments/Archaeogenetics/public%20archaeogenetics%20subpage/dry_lab/Cluster%20Quickstart/#General%20Information
+# There are sections for just about everything, but this one is specifcally for SGE and qsub related things
+
+# You can fun a command on the cluster by writing it as followed
+qsub -q archgen.q -b y -cwd [command]
+# here [command] can be anything that you can run on the terminal
+# -q just represent the "queue" that we line up in, so for the DAG machines, we line up in the DAG queu which is called archgen.q
+# -b Y (Y=yes) is to signify that we want to run a command, not a script
+# -cwd is current working directory
+# If something is gonna take a long time, is gonna take a lot of CPU or need to do a lot of parrallel process, then use qsub.
+# You should try to avoid working on the "head node" (bionc21/22)
+
+# You can see the status of your submission using qstat
+qstat -u your_username
+
+# You can also see ALL the jobs and how busy it is by leaving the -u your_username out
+qstat
+
+# Each job gets a number associated, and you can see that when you run qstat -u your_username
+# but sometimes you only want to see the status of 1 single job, you can then use the -j option
+qstat -j your_jobnumber
+
+# Sometimes you want to see the information of a job AFTER it already finished. Unfortunately
+# qstat doens't keep that information as that would get too cluttered. Instead you can use the accounting
+# function qacct 
+qacct -j your_jobnumber
+# or if you want to see more of a general overview of what you have used up previously you can look at the user overview
+qacct -u your_username
+
+# If you are unsure what type of hardware these machiens have you can use qhost
+qhost 
+
+# Let's say you need a specific amount of memory or cpu power and you see there are 3 systems that can handle it 
+# but you are unsure whether these systems are busy, you can look at specific resources using a pile and grep
+qstat -f | grep bionc22
+
+# Running as script is as easy as replacing [command] with a script and removing -b Y
+qsub -q archgen.q -cwd script.sh 
+
+# Most of the times to both speed up the process, and not HOG the machine, we limit our request to what we need
+# We specify the number of cpu's and memory we need so our jobs stay as small as possible and get in the queue quicker
+# And we are also being kind towards others by not clogging up the big machines with jobs that don't acutally do anything
+# This part takes a bit of trial and error to figure out how much you need.
+# We can specify cpu with the confusing option -pe smp [cpu_number]
+# We can specify the memory with the equally confusing option -l h_vmem=[memory_number]T/G/M
+# The formatting is also weird, one has a space, the other has an = sign... just roll with it :P
+# So if we need 4 cpu's (or threads or cores... they are all different things, but often used to mean the same thing, chips on a pc that process data)
+# and we need 8Gb of memory
+qsub -q archgen.q -cwd -pe smp 4 -l h_vmem=8G script.sh 
+
+# If we run a script we don't have to type these options out every time, there is a way to put it in the script for qsub to read, it's a bit confusing
+# but if we start the script with a list of command and use #$ qsub will know that these are special lines meant for qsub to interpret as options
