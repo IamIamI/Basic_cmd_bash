@@ -1,0 +1,6 @@
+mean_cov_50	coverage	mean	50	RAW
+cov_0	coverage	sum	0	RAW
+sum_hetz_50	heteroz. SNP	sum	50	RAW
+sum_notCov_50	not covered	sum	50	RAW
+	coverage	SD	100	RAW
+hetz_0	heteroz. SNP	sum	0	RAW
